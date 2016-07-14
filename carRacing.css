@@ -151,6 +151,7 @@
     left: 700px;
     width: 100px;
     height: 40px;
+    z-index: 3;
 }
 
 .bodyModel .bodyfull {
@@ -158,6 +159,7 @@
     left: 84px;
     width: 400px;
     height: 150px;
+    z-index: 2;
 }
 
 .bodyModel .tyre1 {
@@ -165,11 +167,7 @@
     left: 700px;
     width: 50px;
     height: 50px;
-    bottom: -20%;
-    border-radius: 100%;
-    left: 21.5%;
-    -webkit-animation: spin 0.4s infinite;
-    animation: spin 0.4s infinite ;
+    z-index: 5;
 }
 
 .bodyModel .tyre2 {
@@ -177,6 +175,12 @@
     left: 700px;
     width: 50px;
     height: 50px;
+    z-index: 6;
+    bottom: -20%;
+    border-radius: 100%;
+    left: 21.5%;
+    -webkit-animation: spin 0.4s infinite linear;
+    animation: spin 0.4s infinite linear;
 }
 
 .bodyModel .light {
@@ -184,6 +188,7 @@
     left: 700px;
     width: 50px;
     height: 50px;
+    z-index: 7;
 }
 
 .bodyModel .frontSideMirror {
@@ -191,6 +196,7 @@
     left: 700px;
     height: 40px;
     width: 150px;
+    z-index: 4;
 }
 
 .wheelRotation {
