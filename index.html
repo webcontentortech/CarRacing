@@ -1,47 +1,56 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <script type="text/javascript" src="jquery.js"></script>
         <script type="text/javascript" src="carRacingGame.js"></script>
-        <script type="text/javascript" src="jquery1.js"></script>
-        <script type="text/javascript" src="jquery2.js"></script>
-        <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script> -->
-        <link rel="stylesheet" href="jquery.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <!-- <script src="jquery-1.8.3.js"></script>
+        <script src="jquerycollision.js"></script>
+        <script src="jquerycollision1.js"></script> -->
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+        <link rel="stylesheet" href="jquery1.css">
+        <link rel="stylesheet" href="jquery2.css">
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="carRacing.css">
     </head>
     <body>
         <button id="build" style="width:50px;height:50px; color:red; border:solid;">Build Your Car</button>
         <button id="run" style="width:50px;height:50px; color:red; border:solid;">Run Your Car</button>
-        <div id="wrapper" style="width:1250px; height:600px; border:solid; color: black;">
-            <div id="header" class="header" style="width:600px; height:400px; border:solid; color: black;">
+        <button id="jump">jump</button>
+        <span style="width:40px; height:10px; border:solid; color: black;" id="chance"></span>
+        <div id="wrapper" style="width:1300px; height:600px; border:solid; color: black;">
+            <div id="header" class="header" style="width:1296px; height:200px; border:solid; color: black;">
                 <div id="backSideMirror" class="back-side-mirror">
                     <img src="mirror.png" class="back-mirror" id="backmirror">
                 </div>
                 <div id="bodyfull" class="body-full">
-                    <img src="body.svg" class="full-body" id="upperbody">
+                    <img src="body.svg" class="full-body" id="fullbody">
                 </div>
                 <div id="tyre1" class="tyre-1">
-                    <img src="tyre.png" class="first-tyre" id="tire1">
+                    <img src="tyre.png" class="first-tyre" id="1tyre">
                 </div>
                 <div id="tyre2" class="tyre-2">
-                    <img src="tyre.png" class="second-tyre" id="tire2">
+                    <img src="tyre.png" class="second-tyre" id="2tyre">
                 </div>
                 <div id="light" class="light">
                     <img src="headlight.png" class="head-light" id="headlight">
                 </div>
                 <div id="frontSideMirror" class="front-side-mirror">
-                    <img src="frontmirror.jpg" class="front-mirror" id="frontmirror">
+                    <img src="forntmirror.png" class="front-mirror" id="frontmirror">
                 </div>
             </div>
-            <div class="body-model" id="bodyModel">
-                <img src="bodyModel.svg" class="back-body" id="blackcar">
+            <div class="track-1" id="track1" style="border:solid; color: black;"></div>
+            <div id="trackmovable" class="track-movable">
+                <div id="bomb" class="bomb-div">
+                    <img src="bomb.jpg" class="bomb" id="hurdle">
+                </div>
+                <div class="body-model" id="bodyModel">
+                    <img src="bodyModel.svg" class="black-body" id="blackbody">
+                </div>
             </div>
-        </div>
-        <div id="track">
-            <div id="track1"></div>
-            <div id="track2"></div>
-            <div id="track3"></div>
+            <div class="track-2" id="track2" style="border:solid; color: black;"></div>
         </div>
     </body>
 </html>
