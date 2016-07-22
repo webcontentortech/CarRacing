@@ -1,25 +1,58 @@
 var imageName;
 var RemainingChance=3;
 var jumping=false;
+var userName="";
 
 $(document).ready(function () {
-    $("#wrapper").hide();
+    $("#lightbox").hide();
+    $("#build,#run,#chance,#reset,#user").hide();
+    $("#header,#track1,#trackmovable,#track2").hide();
+    $("#name").hide();
+    $("#run").attr('disabled','disabled');
     $("#chance").text("RemainingChance:"+RemainingChance);
+    buttonColour();
 
     $("#build").click(function () {
+        $("#run").removeAttr('disabled');
         buildingcar();
-    });
-
-    $("#jump").click(function () {
-        jumping=true;
-        jump();
     });
 
     $("#run").click(function () {
         runCar();
     });
 
+    $("#reset").click(function () {
+        reStart();
+    });
+
+    $("#readyToBuild").click(function () {
+        submitName();
+    });
+
+    $("#submit").click(function () {
+        if($('#userName').val() == ''){
+            console.log("hii");
+            alert("Please first enter your name");
+            console.log("hii");       
+        }else {
+            submitUserName();
+        }
+    });
+
+    $(document).keydown(function(e){
+        jumping=true;
+        var key = e.which;
+        if (key == "13") {
+            userName = $("#userName").val();
+            console.log(userName);
+        }
+        if(key == "38") {
+            jump();
+        }
+    });
+
     function buildingcar() {
+        console.log("hii")
         $("#wrapper").show();
         $("#header div").draggable();
         $("#bodyModel").droppable({
@@ -41,6 +74,11 @@ $(document).ready(function () {
 
     function runCar() {
         $("#header").hide();
+        $("#blackbody").hide();
+        $("#bomb").show();
+        $("#track1,#track2,#trackmovable").addClass("background-image");
+        $("#backSideMirror,#bodyfull,#light,#frontSideMirror").addClass("bobbing-car-parts");
+        $("#1tyre,#2tyre").addClass("spin-car-tyre");  
         $("#bodyModel").animate({ "marginLeft":"250px"},2000);
         for (var i = 0; i < 100; i++) {
             $("#bomb").animate({ "marginLeft":"-600px"},4000,function () {
@@ -62,7 +100,48 @@ $(document).ready(function () {
         $("#bodyModel").animate({ "marginLeft":"250px"},500);
         if (RemainingChance==0) {
             alert("YOUR GAME IS OVER and BUILD YOUR CAR AGAIN and RUN IT AGAIN");
-            window.location.href = "index1.html";
         }
+    }
+
+    function buttonColour() {
+        $("#readyToBuild,#submit").mouseover(function() {
+            $("#readyToBuild,#submit").addClass("bgcolour");
+        });
+        $("#build").mouseover(function() {
+            $("#build").addClass("bgcolour");
+        });
+        $("#run").mouseover(function() {
+            $("#run").addClass("bgcolour");
+        });
+        $("#reset").mouseover(function() {
+            $("#reset").addClass("bgcolour");
+        });
+        $("#readyToBuild,#submit,#build,#run,#reset").mouseout(function() {
+            $("#readyToBuild,#submit,#build,#run,#reset").removeClass("bgcolour");
+        });
+    }
+
+    function submitName() {
+        $("#name").show();
+        $("#readyToBuild").hide();
+    }
+
+    function submitUserName(argument) {
+        $("#body1,#bomb").hide();
+        $("#wrapper").hide();
+        $("#build,#run,#chance,#user").show();
+        $("#header,#track1,#trackmovable,#track2,#reset").show();
+        userName = $("#userName").val();
+        $("#user").text("Welcome "+userName+ " To The Game");
+    }
+
+    function reStart() {
+        $("#body1").show();
+        $("#readyToBuild").show();
+        $("#build,#run,#chance,#reset").hide();
+        $("#name").hide();
+        runCar().stop();
+        collision().stop();
+        alert().stop();
     }
 });
