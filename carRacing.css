@@ -48,28 +48,20 @@
 }
 
 .user-name {
-    min-width: 100px;
+    min-width: 200px;
     height: 30px;
     margin-top: 220px;
     margin-left: 500px;
 }
 
 .user-Name {
-    margin-left: 232px;
-}
-
-.user-name {
-    width: 60px;
-    top: 10px;
-    margin-left: 540px;
-    border:solid; 
-    color: black;
+    margin-left: 830px;
 }
 
 .chance {
     width: 40px;
     top: 10px;
-    margin-left: 200px;
+    margin-left: -700px;
     border:solid; 
     color: black;
 }
@@ -80,8 +72,8 @@
 }
 
 .bgcolour{
-    background-color: #FF0073;
-    border-color: #FF0073;
+    background-color: #FFE4B5;
+    border-color: #FFE4B5;
 }
 
 .wrapper {

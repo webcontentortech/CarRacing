@@ -1,5 +1,5 @@
 var imageName;
-var RemainingChance=3;
+var AvailableChance=3;
 var jumping=false;
 var userName="";
 
@@ -9,11 +9,10 @@ $(document).ready(function () {
     $("#header,#track1,#trackmovable,#track2").hide();
     $("#name").hide();
     $("#run").attr('disabled','disabled');
-    $("#chance").text("RemainingChance:"+RemainingChance);
+    $("#chance").text("Available Chance: "+AvailableChance);
     buttonColour();
 
     $("#build").click(function () {
-        $("#run").removeAttr('disabled');
         buildingcar();
     });
 
@@ -30,23 +29,16 @@ $(document).ready(function () {
     });
 
     $("#submit").click(function () {
-        if($('#userName').val() == ''){
-            console.log("hii");
-            alert("Please first enter your name");
-            console.log("hii");       
-        }else {
-            submitUserName();
-        }
+        ifInputIsEmpty();
     });
 
     $(document).keydown(function(e){
-        jumping=true;
         var key = e.which;
         if (key == "13") {
             userName = $("#userName").val();
-            console.log(userName);
         }
         if(key == "38") {
+            jumping=true;
             jump();
         }
     });
@@ -61,6 +53,7 @@ $(document).ready(function () {
                 imageName=ui.draggable.find('img').attr('src');
                 if (imageName == "forntmirror.png") {
                     alert("Your Car Is Ready To Run and To Run It Click On -- Run Your Car -- button.");
+                    $("#run").removeAttr('disabled');
                 }
             }
         });
@@ -76,8 +69,9 @@ $(document).ready(function () {
         $("#header").hide();
         $("#blackbody").hide();
         $("#bomb").show();
+        $("#build").attr('disabled','disabled');
         $("#track1,#track2,#trackmovable").addClass("background-image");
-        $("#backSideMirror,#bodyfull,#light,#frontSideMirror").addClass("bobbing-car-parts");
+        $("#bodyfull,#backmirror,#1tyre,#2tyre,#headlight,#frontmirror").addClass("bobbing-car-parts");
         $("#1tyre,#2tyre").addClass("spin-car-tyre");  
         $("#bodyModel").animate({ "marginLeft":"250px"},2000);
         for (var i = 0; i < 100; i++) {
@@ -85,21 +79,22 @@ $(document).ready(function () {
                 if (jumping) {
                     jumping = !jumping;
                 }else {
+                    alert("CAR CRASHED");
                     collision();
                 }
             });
-            $("#bomb").animate({ "marginLeft":"0px"},0)      
+            $("#bomb").animate({ "marginLeft":"0px"},0);      
         }
     }
 
     function collision() {
-        alert("CAR CRASHED");
-        RemainingChance--;
-        $("#chance").text("RemainingChance:"+RemainingChance);
+        AvailableChance--;
+        $("#chance").text("AvailableChance:"+AvailableChance);
         $("#bodyModel").animate({ "marginLeft":"0px"},"fast");
         $("#bodyModel").animate({ "marginLeft":"250px"},500);
-        if (RemainingChance==0) {
+        if (AvailableChance==0) {
             alert("YOUR GAME IS OVER and BUILD YOUR CAR AGAIN and RUN IT AGAIN");
+            reStart();
         }
     }
 
@@ -126,22 +121,27 @@ $(document).ready(function () {
         $("#readyToBuild").hide();
     }
 
-    function submitUserName(argument) {
+    function submitUserName() {
         $("#body1,#bomb").hide();
         $("#wrapper").hide();
         $("#build,#run,#chance,#user").show();
         $("#header,#track1,#trackmovable,#track2,#reset").show();
         userName = $("#userName").val();
-        $("#user").text("Welcome "+userName+ " To The Game");
+        $("#user").text("Welcome "+userName+"!");
+    }
+
+    function ifInputIsEmpty() {
+        if($('#userName').val() == ''){
+            alert("Please first enter your name");
+        }else {
+            submitUserName();
+        }
     }
 
     function reStart() {
         $("#body1").show();
         $("#readyToBuild").show();
         $("#build,#run,#chance,#reset").hide();
-        $("#name").hide();
-        runCar().stop();
-        collision().stop();
-        alert().stop();
+        $("#name,#user").hide();
     }
 });
