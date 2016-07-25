@@ -95,6 +95,14 @@
     position: absolute;
 }
 
+.hii {
+    width: 150px;
+    height: 40px;
+    top: 30px;
+    left: 500px;
+    position: absolute;
+}
+
 .back-side-mirror .back-mirror {
     width: 100%;
     height:100%;

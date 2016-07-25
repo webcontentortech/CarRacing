@@ -3,11 +3,9 @@ var AvailableChance=3;
 var jumping=false;
 var userName="";
 
+var carDragableParts = {frontMirror: { isDragable: true, id: "frontSideMirror" },backMirror: { isDragable: true, id: "backSideMirror" },bodyFull: { isDragable: true, id: "bodyFull" },tyre1: { isDragable: true, id: "tyre1" },tyre2: { isDragable: true, id: "tyre2" },light: { isDragable: true, id: "light" }}
 $(document).ready(function () {
-    $("#lightbox").hide();
-    $("#build,#run,#chance,#reset,#user").hide();
-    $("#header,#track1,#trackmovable,#track2").hide();
-    $("#name").hide();
+    $("#build,#run,#chance,#reset,#user,#header,#track1,#trackMovable,#track2,#name").hide();
     $("#run").attr('disabled','disabled');
     $("#chance").text("Available Chance: "+AvailableChance);
     buttonColour();
@@ -29,6 +27,7 @@ $(document).ready(function () {
     });
 
     $("#submit").click(function () {
+        userName = $("#userName").val();
         ifInputIsEmpty();
     });
 
@@ -36,6 +35,7 @@ $(document).ready(function () {
         var key = e.which;
         if (key == "13") {
             userName = $("#userName").val();
+            ifInputIsEmpty();
         }
         if(key == "38") {
             jumping=true;
@@ -44,7 +44,6 @@ $(document).ready(function () {
     });
 
     function buildingcar() {
-        console.log("hii")
         $("#wrapper").show();
         $("#header div").draggable();
         $("#bodyModel").droppable({
@@ -66,33 +65,23 @@ $(document).ready(function () {
     }
 
     function runCar() {
-        $("#header").hide();
-        $("#blackbody").hide();
+        $("#header,#blackBody").hide();
         $("#bomb").show();
         $("#build").attr('disabled','disabled');
-        $("#track1,#track2,#trackmovable").addClass("background-image");
-        $("#bodyfull,#backmirror,#1tyre,#2tyre,#headlight,#frontmirror").addClass("bobbing-car-parts");
+        $("#track1,#track2,#trackMovable").addClass("background-image");
+        $("#bodyFull,#backMirror,#headLight,#frontMirror").addClass("bobbing-car-parts");
         $("#1tyre,#2tyre").addClass("spin-car-tyre");  
         $("#bodyModel").animate({ "marginLeft":"250px"},2000);
-        for (var i = 0; i < 100; i++) {
-            $("#bomb").animate({ "marginLeft":"-600px"},4000,function () {
-                if (jumping) {
-                    jumping = !jumping;
-                }else {
-                    alert("CAR CRASHED");
-                    collision();
-                }
-            });
-            $("#bomb").animate({ "marginLeft":"0px"},0);      
-        }
+        setInterval(bombMovement, 0); 
     }
 
     function collision() {
+        alert("CAR CRASHED");
         AvailableChance--;
-        $("#chance").text("AvailableChance:"+AvailableChance);
+        $("#chance").text("AvailableChance: "+ AvailableChance);
         $("#bodyModel").animate({ "marginLeft":"0px"},"fast");
         $("#bodyModel").animate({ "marginLeft":"250px"},500);
-        if (AvailableChance==0) {
+        if (AvailableChance == 0) {
             alert("YOUR GAME IS OVER and BUILD YOUR CAR AGAIN and RUN IT AGAIN");
             reStart();
         }
@@ -122,12 +111,10 @@ $(document).ready(function () {
     }
 
     function submitUserName() {
-        $("#body1,#bomb").hide();
-        $("#wrapper").hide();
-        $("#build,#run,#chance,#user").show();
-        $("#header,#track1,#trackmovable,#track2,#reset").show();
-        userName = $("#userName").val();
+        $("#body1,#bomb,#wrapper").hide();
+        $("#build,#run,#chance,#user,#header,#track1,#trackMovable,#track2,#reset").show();
         $("#user").text("Welcome "+userName+"!");
+        console.log(userName)
     }
 
     function ifInputIsEmpty() {
@@ -138,10 +125,36 @@ $(document).ready(function () {
         }
     }
 
+    function bombMovement() {
+        $("#bomb").animate({ "marginLeft":"-600px"},4000,function () {
+            if (jumping) {
+                jumping = !jumping;
+            }else {
+                collision();                }
+        });
+        $("#bomb").animate({ "marginLeft":"0px"},0);
+    }
+
     function reStart() {
-        $("#body1").show();
-        $("#readyToBuild").show();
-        $("#build,#run,#chance,#reset").hide();
-        $("#name,#user").hide();
+        $("#bodyFull,#backMirror,#headLight,#frontMirror").removeClass("bobbing-car-parts");
+        $("#1tyre,#2tyre").removeClass("spin-car-tyre");
+        $("#track1,#track2,#trackMovable").removeClass("background-image");
+        $("#bodyModel").animate({ "marginLeft":"0px"},"fast");
+        $("#header,#blackBody").show();
+        $("#bomb").hide();
+        for (var i = 0; i < 100; i++) {
+            $("#bomb").animate().stop();
+        }
+
+        
+        $.each( carDragableParts, function( key, value ) {
+            console.log( key + ": " + value );
+            console.log(key.id)
+        });
+        //$('#userName').val() == ('');
+        // $("#body1,#readyToBuild").show();
+        // $("#build,#run,#chance,#reset,#name,#user").hide();
+        // $("#run").attr('disabled','disabled');
+        // $("#build").removeAttr('disabled');
     }
 });
