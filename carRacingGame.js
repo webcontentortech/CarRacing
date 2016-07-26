@@ -1,9 +1,9 @@
 var imageName;
 var AvailableChance=3;
-var jumping=false;
+var isCarJump=false;
 var userName="";
 
-var carDragableParts = {frontMirror: { isDragable: true, id: "frontSideMirror" },backMirror: { isDragable: true, id: "backSideMirror" },bodyFull: { isDragable: true, id: "bodyFull" },tyre1: { isDragable: true, id: "tyre1" },tyre2: { isDragable: true, id: "tyre2" },light: { isDragable: true, id: "light" }}
+var carDragableParts = {"backMirror": { isDragable: true, mainId: "backSideMirror", mainClass: "back-side-mirror", imageSrc: "mirror.png", imageId: "backMirror", imageClass: "back-mirror" },"frontMirror": { isDragable: true, mainId: "frontSideMirror", mainClass: "front-side-mirror", imageSrc: "frontmirror.png", imageId: "frontMirror", imageClass: "front-mirror" },"bodyFull": { isDragable: true, mainId: "bodyFull", mainClass: "body-full", imageSrc: "body.svg", imageId: "fullBody", imageClass: "full-body" },"tyre1": { isDragable: true, mainId: "tyre1", mainClass: "tyre-1", imageSrc: "tyre.png", imageId: "1tyre", imageClass: "first-tyre" },"tyre2": { isDragable: true, mainId: "tyre2", mainClass: "tyre-2", imageSrc: "tyre.png", imageId: "2tyre", imageClass: "second-tyre" },"light": { isDragable: true, mainId: "light", mainClass: "light", imageSrc: "headlight.png", imageId: "headLight", imageClass: "head-light" }}
 $(document).ready(function () {
     $("#build,#run,#chance,#reset,#user,#header,#track1,#trackMovable,#track2,#name").hide();
     $("#run").attr('disabled','disabled');
@@ -11,6 +11,7 @@ $(document).ready(function () {
     buttonColour();
 
     $("#build").click(function () {
+        $("#build").attr('disabled','disabled');
         buildingcar();
     });
 
@@ -38,7 +39,7 @@ $(document).ready(function () {
             ifInputIsEmpty();
         }
         if(key == "38") {
-            jumping=true;
+            isCarJump=true;
             jump();
         }
     });
@@ -50,8 +51,8 @@ $(document).ready(function () {
             drop: function (event,ui) {
                 $(this).append(ui.draggable);
                 imageName=ui.draggable.find('img').attr('src');
-                if (imageName == "forntmirror.png") {
-                    alert("Your Car Is Ready To Run and To Run It Click On -- Run Your Car -- button.");
+                if (imageName == "frontmirror.png") {
+                    alert("Your Car Is Ready To Run");
                     $("#run").removeAttr('disabled');
                 }
             }
@@ -67,17 +68,17 @@ $(document).ready(function () {
     function runCar() {
         $("#header,#blackBody").hide();
         $("#bomb").show();
-        $("#build").attr('disabled','disabled');
         $("#track1,#track2,#trackMovable").addClass("background-image");
         $("#bodyFull,#backMirror,#headLight,#frontMirror").addClass("bobbing-car-parts");
         $("#1tyre,#2tyre").addClass("spin-car-tyre");  
         $("#bodyModel").animate({ "marginLeft":"250px"},2000);
-        setInterval(bombMovement, 0); 
+        bombMovement(); 
     }
 
     function collision() {
         alert("CAR CRASHED");
         AvailableChance--;
+        console.log("CAR CRASHED after alert");
         $("#chance").text("AvailableChance: "+ AvailableChance);
         $("#bodyModel").animate({ "marginLeft":"0px"},"fast");
         $("#bodyModel").animate({ "marginLeft":"250px"},500);
@@ -85,6 +86,7 @@ $(document).ready(function () {
             alert("YOUR GAME IS OVER and BUILD YOUR CAR AGAIN and RUN IT AGAIN");
             reStart();
         }
+         bombMovement();
     }
 
     function buttonColour() {
@@ -114,7 +116,6 @@ $(document).ready(function () {
         $("#body1,#bomb,#wrapper").hide();
         $("#build,#run,#chance,#user,#header,#track1,#trackMovable,#track2,#reset").show();
         $("#user").text("Welcome "+userName+"!");
-        console.log(userName)
     }
 
     function ifInputIsEmpty() {
@@ -127,34 +128,42 @@ $(document).ready(function () {
 
     function bombMovement() {
         $("#bomb").animate({ "marginLeft":"-600px"},4000,function () {
-            if (jumping) {
-                jumping = !jumping;
-            }else {
-                collision();                }
-        });
-        $("#bomb").animate({ "marginLeft":"0px"},0);
+            if (isCarJump) {
+                $("#bomb").animate({ "marginLeft":"0px"},0,function () {
+                    bombMovement();
+                });
+                isCarJump = !isCarJump;
+            } else{
+                $("#bomb").animate({ "marginLeft":"0px"},0,function () {
+                    collision();
+                });
+            }
+        }); 
+    }
+
+    function removeImages() {
+        $("#bodyFull,#backSideMirror,#tyre1,#tyre2,#light,#frontSideMirror").remove();
+        $("#backMirror,#fullBody,#1tyre,#2tyre,#headLight,#frontMirror").remove();
+        $("#header").append("<div id='backSideMirror' class='back-side-mirror'><img src='mirror.png' id='backMirror' class='back-mirror'></div>");
+        $("#header").append("<div id='bodyFull' class='body-full'><img src='body.svg' id='fullBody' class='full-body'></div>");
+        $("#header").append("<div id='tyre1' class='tyre-1'><img src='tyre.png' id='1tyre' class='first-tyre'></div>");
+        $("#header").append("<div id='tyre2' class='tyre-2'><img src='tyre.png' id='2tyre' class='second-tyre'></div>");
+        $("#header").append("<div id='light' class='light'><img src='headlight.png' id='headLight' class='head-light'></div>");
+        $("#header").append("<div id='frontSideMirror' class='front-side-mirror'><img src='frontmirror.png' id='frontMirror' class='front-mirror'></div>");
     }
 
     function reStart() {
+        $("#bomb").animate().stop();
         $("#bodyFull,#backMirror,#headLight,#frontMirror").removeClass("bobbing-car-parts");
         $("#1tyre,#2tyre").removeClass("spin-car-tyre");
         $("#track1,#track2,#trackMovable").removeClass("background-image");
         $("#bodyModel").animate({ "marginLeft":"0px"},"fast");
-        $("#header,#blackBody").show();
-        $("#bomb").hide();
-        for (var i = 0; i < 100; i++) {
-            $("#bomb").animate().stop();
-        }
-
-        
-        $.each( carDragableParts, function( key, value ) {
-            console.log( key + ": " + value );
-            console.log(key.id)
-        });
-        //$('#userName').val() == ('');
-        // $("#body1,#readyToBuild").show();
-        // $("#build,#run,#chance,#reset,#name,#user").hide();
-        // $("#run").attr('disabled','disabled');
-        // $("#build").removeAttr('disabled');
+        $("#header,#blackBody,#body1,#readyToBuild").show();
+        $("#bomb,#build,#run,#chance,#reset,#name,#user").hide();
+        removeImages();
+        $('#userName').val('');
+        $("#build,#run,#chance,#reset,#name,#user").hide();
+        $("#run").attr('disabled','disabled');
+        $("#build").removeAttr('disabled');
     }
 });
