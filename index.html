@@ -2,7 +2,7 @@
 <html>
     <head>
         <script type="text/javascript" src="jquery.js"></script>
-        <script type="text/javascript" src="carRacingGame1.js"></script>
+        <script type="text/javascript" src="carRacingGame.js"></script>
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
         <link rel="stylesheet" href="jquery1.css">
@@ -16,13 +16,27 @@
         <button id="reset" class="button" style="height:35px;">Restart</button>
         <span id="user" class="user-Name"></span>
         <span id="chance" class="chance"></span>
+        <div id="help" class="help"><center><font size="6">HELP</center><hr><font size="4">
+            <ul>
+                <li><font size="4">To asemble your car please press "Build Your Car" button.</li>
+            </ul>
+            <ul>
+                <li><font size="4">To run your car please press "Run Your Car" button.</li>
+            </ul>
+            <ul>
+                <li><font size="4">To restart your game please press "Restart" button.</li>
+            </ul>
+            <ul>
+                <li><font size="4">To jump your car please press UP arrow key from your keyboard.</li>
+            </ul>
+        </div>
         <div id="wrapper" style="width:1270px; height:600px; " class="wrapper">
             <div class="body1" id="body1">
                 <center>
                     <button id="readyToBuild" class="ready-to-build">Start The Game</button>
                 </center>
                 <div id="name">
-                    <input type="text" style="width:60px;" placeholder="  Please Enter Your Name..." id="userName" class="user-name">
+                    <input type="text" name="userName" style="width:60px;" placeholder="Please enter your name..." id="userName" class="user-name" autofocus>
                     <button id="submit" class="button" style="height:35px;">Submit</button>
                 </div>
             </div>
