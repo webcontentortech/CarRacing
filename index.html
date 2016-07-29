@@ -11,20 +11,41 @@
         <link rel="stylesheet" type="text/css" href="carRacing.css">
     </head>
     <body id="body">
-        <button id="build" style="width:50px;height:50px; color:red; border:solid;">Build Your Car</button>
-        <button id="run" style="width:50px;height:50px; color:red; border:solid;">Run Your Car</button>
-        <button id="jump" style="width:50px;height:30px; color:green; border:solid;">jump</button>
-        <button id="reset" style="width:50px;height:30px; color:green; border:solid;">
-            <a href="index1.html">reset</a>
-        </button>
-        <span style="width:40px; height:10px; border:solid; color: black;" id="chance"></span>
-        <div id="wrapper" style="width:1300px; height:600px; border:solid; color: black;">
+        <button id="build" class="button" style="height:35px;">Build Your Car</button>
+        <button id="run" class="button" style="height:35px;">Run Your Car</button>
+        <button id="reset" class="button" style="height:35px;">Restart</button>
+        <span id="user" class="user-Name"></span>
+        <span id="chance" class="chance"></span>
+        <div id="help" class="help"><center><font size="6">HELP</center><hr><font size="4">
+            <ul>
+                <li><font size="4">To asemble your car please press "Build Your Car" button.</li>
+            </ul>
+            <ul>
+                <li><font size="4">To run your car please press "Run Your Car" button.</li>
+            </ul>
+            <ul>
+                <li><font size="4">To restart your game please press "Restart" button.</li>
+            </ul>
+            <ul>
+                <li><font size="4">To jump your car please press UP arrow key from your keyboard.</li>
+            </ul>
+        </div>
+        <div id="wrapper" style="width:1270px; height:600px; " class="wrapper">
+            <div class="body1" id="body1">
+                <center>
+                    <button id="readyToBuild" class="ready-to-build">Start The Game</button>
+                </center>
+                <div id="name">
+                    <input type="text" name="userName" style="width:60px;" placeholder="Please enter your name..." id="userName" class="user-name" autofocus>
+                    <button id="submit" class="button" style="height:35px;">Submit</button>
+                </div>
+            </div>
             <div id="header" class="header" style="width:1296px; height:200px; border:solid; color: black;">
                 <div id="backSideMirror" class="back-side-mirror">
-                    <img src="mirror.png" class="back-mirror" id="backmirror">
+                    <img src="mirror.png" class="back-mirror" id="backMirror">
                 </div>
-                <div id="bodyfull" class="body-full">
-                    <img src="body.svg" class="full-body" id="fullbody">
+                <div id="bodyFull" class="body-full">
+                    <img src="body.svg" class="full-body" id="fullBody">
                 </div>
                 <div id="tyre1" class="tyre-1">
                     <img src="tyre.png" class="first-tyre" id="1tyre">
@@ -33,19 +54,19 @@
                     <img src="tyre.png" class="second-tyre" id="2tyre">
                 </div>
                 <div id="light" class="light">
-                    <img src="headlight.png" class="head-light" id="headlight">
+                    <img src="headlight.png" class="head-light" id="headLight">
                 </div>
                 <div id="frontSideMirror" class="front-side-mirror">
-                    <img src="forntmirror.png" class="front-mirror" id="frontmirror">
+                    <img src="frontmirror.png" class="front-mirror" id="frontMirror">
                 </div>
             </div>
             <div class="track-1" id="track1" style="border:solid; color: black;"></div>
-            <div id="trackmovable" class="track-movable">
+            <div id="trackMovable" class="track-movable" >
                 <div id="bomb" class="bomb-div">
                     <img src="bomb.jpg" class="bomb" id="hurdle">
                 </div>
-                <div class="body-model" id="bodyModel">
-                    <img src="bodyModel.svg" class="black-body" id="blackbody">
+                <div class="body-model" id="bodyModel" >
+                    <img src="bodyModel.svg" class="black-body" id="blackBody">
                 </div>
             </div>
             <div class="track-2" id="track2" style="border:solid; color: black;"></div>
