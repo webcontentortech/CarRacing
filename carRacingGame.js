@@ -9,7 +9,6 @@ $(document).ready(function () {
     $("#run").attr('disabled','disabled');
     $("#chance").text("Available Chance: " + availableChance);
     
-
     $("#build").click(function () {
         $("#build").attr('disabled','disabled');
         buildingcar();
@@ -62,7 +61,7 @@ $(document).ready(function () {
         isCarJump = true;
         $("#bodyModel").animate().stop();
         $("#bodyModel").animate({ top: "-120px" },{ duration: 500, easing: "easeOutQuad" });
-        $("#bodyModel").animate({ top: "+10px" },{ duration: 2000, easing: "easeInQuad" });
+        $("#bodyModel").animate({ top: "+10px" },{ duration: 1000, easing: "easeInQuad" });
     }
 
     var runCar = function () {
@@ -71,7 +70,7 @@ $(document).ready(function () {
         $("#track1,#track2,#trackMovable").addClass("background-image");
         $("#bodyFull,#backMirror,#headLight,#frontMirror").addClass("bobbing-car-parts");
         $("#1tyre,#2tyre").addClass("spin-car-tyre");  
-        $("#bodyModel").animate({ "marginLeft":"250px"},2000);
+        $("#bodyModel").animate({ "marginLeft":"250px"},1000);
         bombMovement(); 
     }
 
@@ -136,7 +135,7 @@ $(document).ready(function () {
     }
 
     var bombMovement = function () {
-        $("#bomb").animate({ "marginLeft":"-600px"},4000,function () {
+        $("#bomb").animate({ "marginLeft":"-589px"},4000,function () {
             if (isCarJump) {
                 $("#bomb").animate({ "marginLeft":"0px"},0,function () {
                     bombMovement();
